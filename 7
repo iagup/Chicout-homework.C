@@ -1,0 +1,39 @@
+package org.example;
+import java.io.*;
+import java.util.*;
+
+
+
+public class Main {
+    public static void main( String[] args ) {
+
+        String arquivoOriginal = "meuarquivo.txt";
+        String arquivoOrdenado = "meuarquivo_ordenado.txt";
+
+        List<String> linhas = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(arquivoOriginal))) {
+            String linha;
+            while ((linha = br.readLine()) != null) {
+                linhas.add(linha);
+            }
+        } catch (IOException e) {
+            System.err.println("Erro ao ler o arquivo: " + e.getMessage());
+            return;
+        }
+
+        Collections.sort(linhas);
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(arquivoOrdenado))) {
+            for (String linha : linhas) {
+                bw.write(linha);
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            System.err.println("Erro ao salvar o arquivo ordenado: " + e.getMessage());
+        }
+
+        System.out.println("Arquivo ordenado com sucesso!");
+    }
+}
+
